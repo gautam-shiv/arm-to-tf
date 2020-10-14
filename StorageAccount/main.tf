@@ -4,10 +4,11 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "myrg" {
-  name = "dd-test-sample-rg-pasv"
+  name     = "dd-test-sample-rg-pasv"
   location = "centralindia"
-  tags = {
-        environment = "Terraform Demo"
+  
+  tags {
+       environment = "Terraform Demo"
     }
 }
 
@@ -40,9 +41,25 @@ resource "azurerm_storage_container" "mytfstcontainer" {
 }
 
 # create key vault
-resource "azurerm_key_vault_secret" "mykeyvault" {
-    name                     = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}"
-    value                    =
+resource "azurerm_key_vault" "mytfkv" {
+  name                = "${var.key_vault_name}/${azurerm_storage_account.mytfstorage.name}ConnString"
+  location            = azurerm_resource_group.myrg.location
+  resource_group_name = azurerm_resource_group.myrg.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
 
-    depends_on               = [azurerm_storage_account.mytfstorage.id]
+  tags {
+    environment = "Terraform Demo"
+  }
+
+  dependsOn           = [azurerm_storage_account.mytfstorage.id]
+}
+
+resource "azurerm_key_vault_secret" "kvsecret" {
+  name         = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv-secret"
+  value        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.mytfstorage.name};AccountKey=listKeys(${azurerm_storage_account.mytfstorage.id}2015-05-01-preview.key1)"
+  key_vault_id = azurerm_key_vault.mytfkv.id
+
+  tags {
+    environment = "Terraform Demo"
+  }
 }
