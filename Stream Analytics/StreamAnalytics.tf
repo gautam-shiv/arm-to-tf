@@ -59,8 +59,45 @@ resource "azurerm_template_deployment" "mydeploy" {
 {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
-          "parameters": {},
-          "variables": {},
+          "parameters": {
+           "projectName": {
+             "type": "string",
+             "metadata": {
+                 "description": "Name for the project"
+             }
+           },
+           "environmentName": {
+             "type": "string",
+             "metadata": {
+                 "description": "Name for the environment"
+             },
+             "defaultValue": "dev",
+             "allowedValues": [
+                 "lab",
+                 "dev",
+                 "qa",
+                 "pro"
+              ]
+           },
+           "zone": {
+             "type": "string",
+             "defaultValue": "",
+             "metadata": {
+                  "description": "Describes the performance level for Edition"
+              }
+           },
+           "StreamAnalyticsName": {
+              "type": "string",
+              "metadata": {
+                   "description": "Name for the StreamAnalytics"
+               }
+           }
+          },
+          "variables": {
+              "streamAnalyticsJobName": "[toLower(concat(parameters('projectName'),  parameters('zone'),'-',parameters('StreamAnalyticsName'),'-', parameters('environmentName'), 'asa'))]",
+              "functionAppName": "[toLower(concat(parameters('projectName'), parameters('zone'), '-',parameters('StreamAnalyticsName'),'-', parameters('environmentName'), 'fa'))]",
+              "sharedAccessPolicyName": "controlling-request-eh-read"
+          },
           "resources": [
             {
               "name": "[concat(variables('streamAnalyticsJobName'), '/',parameters('streamAnalyticsInputs')[copyIndex()],'-controlling')]",
@@ -89,7 +126,8 @@ resource "azurerm_template_deployment" "mydeploy" {
           "outputs": {}
 }
 DEPLOY
-  
+
+
   # these key-value pairs are passed into the ARM Template's `parameters` block
   deployment_mode = "Incremental"
 }
