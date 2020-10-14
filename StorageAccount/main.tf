@@ -42,7 +42,7 @@ resource "azurerm_storage_container" "mytfstcontainer" {
 
 # create key vault
 resource "azurerm_key_vault" "mytfkv" {
-  name                = "${var.key_vault_name}/${azurerm_storage_account.mytfstorage.name}ConnString"
+  name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv/${azurerm_storage_account.mytfstorage.name}ConnString"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
