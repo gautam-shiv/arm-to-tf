@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "myrg" {
   name     = "dd-test-sample-rg-pasv"
   location = "centralindia"
   
-  tags = {
+  tags {
         environment = "Terraform Demo"
     }
 }
@@ -88,7 +88,7 @@ resource "azurerm_network_interface" "mytfnic" {
         public_ip_address_id          = azurerm_public_ip.tfpublicip.id
     }
 
-    tags = {
+    tags {
         environment = "Terraform Demo"
     }
 
