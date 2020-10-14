@@ -1,1 +1,1 @@
-# arm-to-tf
+# ARM templates to Terraform templates 
