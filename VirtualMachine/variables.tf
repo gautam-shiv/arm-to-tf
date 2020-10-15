@@ -1,3 +1,10 @@
+resource "random_uuid" "test" { 
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = "${var.ami_id}"
+  }
+}
+
 variable "projectname" {
   type         =  string
   description  =  "Name for the project"
@@ -13,7 +20,7 @@ variable "environmentName" {
   description  =  "Name for the environment"
 
   validation {
-    condition     = contains(["lab", "dev", "pro", "qa"], var.environmentName)
+    condition     = contains(["lab", "dev", "pro", "qa"], "${var.environmentName}")
     error_message = "Argument \"environmentName\" must be either \"lab\", \"dev\", \"qa\" or \"pro\"."
   }
 }
@@ -21,11 +28,11 @@ variable "environmentName" {
 variable "account_replication_type" {
   type         =  string
   description  =  "Name for the environment"
-  default      =  "Standard_LRS"
+  default      =  "LRS"
 
   validation {
-    condition     = contains(["Standard_LRS", "Standard_GRS", "Standard_RAGRS"], var.account_replication_type)
-    error_message = "Argument \"account_replication_type\" must be either \"Standard_LRS\", \"Standard_GRS\"or \"Standard_RAGRS\"."
+    condition     = contains(["LRS", "GRS", "RAGRS"], "${var.account_replication_type}")
+    error_message = "Argument \"account_replication_type\" must be either \"LRS\", \"GRS\"or \"RAGRS\"."
   }
 }
 
@@ -47,7 +54,7 @@ variable "admin_password" {
 variable "dnslabelprefix" {
   type         =  string
   description  =  "Unique DNS Name for the Public IP used to access the Virtual Machine"
-  default      =  "${toLower(var.vmName)}-${toLower{uniqueString(azurerm_resource_group.myrg.id, var.vmName)}"
+  default      =  "${lower(var.vmName)}-${azurerm_resource_group.myrg.id}-${var.vmName}"
 }
 
 variable "publicip_sku" {
@@ -56,7 +63,7 @@ variable "publicip_sku" {
   default      =  "Basic"
 
   validation {
-    condition     = contains(["Basic", "Standard"], var.publicip_sku)
+    condition     = contains(["Basic", "Standard"], "${var.publicip_sku}")
     error_message = "Argument \"publicip_sku\" must be either \"Basic\" or \"Standard\"."
   }
 }
@@ -67,7 +74,7 @@ variable "public_allocation_method" {
   default      =  "Dynamic"
 
   validation {
-    condition     = contains(["Dynamic", "Static"], var.public_allocation_method)
+    condition     = contains(["Dynamic", "Static"], "${var.public_allocation_method}")
     error_message = "Argument \"public_allocation_method\" must be either \"Dynamic\" or \"Static\"."
   }
 }
@@ -90,7 +97,7 @@ variable "os_disk_type" {
   default      =  "Standard_LRS"
 
   validation {
-    condition     = contains([ "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS" ], var.os_disk_type)
+    condition     = contains([ "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS" ], "${var.os_disk_type}")
     error_message = "Argument \"os_disk_type\" must be either \"Standard_LRS\", \"Premium_LRS\", \"StandardSSD_LRS\" or \"UltraSSD_LRS\"."
   }
 }
@@ -115,7 +122,7 @@ variable "os_version" {
         "2019-Datacenter-Core-with-Containers-smalldisk",
         "2019-Datacenter-smalldisk",
         "2019-Datacenter-with-Containers",
-        "2019-Datacenter-with-Containers-smalldisk"], var.os_version)
+        "2019-Datacenter-with-Containers-smalldisk"], "${var.os_version}")
     error_message = "Argument \"os_version\" must be either \"2008-R2-SP1\", \"2012-Datacenter\", \"2012-R2-Datacenter\"or \"2016-Nano-Server\"."
   }
 }
