@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "myrg" {
   name     = "dd-test-sample-rg-pasv"
   location = "centralindia"
   
-  tags {
+  tags = {
        environment = "Terraform Demo"
     }
 }
@@ -22,7 +22,7 @@ resource "azurerm_storage_account" "mytfstorage" {
     account_replication_type = "${var.account_replication_type}"
     access_tier              = "Hot"
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 
@@ -33,7 +33,7 @@ resource "azurerm_storage_container" "mytfstcontainer" {
     name                     = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}"
     container_access_type    = "private"
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 
@@ -47,7 +47,7 @@ resource "azurerm_key_vault" "mytfkv" {
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
 
-  tags {
+  tags = {
     environment = "Terraform Demo"
   }
 
@@ -59,7 +59,7 @@ resource "azurerm_key_vault_secret" "kvsecret" {
   value        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.mytfstorage.name};AccountKey=listKeys(${azurerm_storage_account.mytfstorage.id}2015-05-01-preview.key1)"
   key_vault_id = azurerm_key_vault.mytfkv.id
 
-  tags {
+  tags = {
     environment = "Terraform Demo"
   }
 }
