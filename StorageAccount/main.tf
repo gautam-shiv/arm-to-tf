@@ -14,10 +14,10 @@ resource "azurerm_resource_group" "myrg" {
 
 # create storage account
 resource "azurerm_storage_account" "mytfstorage" {
-    name                     = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-st"
+    name                     = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.environmentName)}-st"
     resource_group_name      = azurerm_resource_group.myrg.name
     location                 = azurerm_resource_group.myrg.location
-    account_type             = "StorageV2"
+    account_kind             = "StorageV2"
     account_tier             = "Standard"
     account_replication_type = "${var.account_replication_type}"
     access_tier              = "Hot"
@@ -30,7 +30,7 @@ resource "azurerm_storage_account" "mytfstorage" {
 
 # create storage container
 resource "azurerm_storage_container" "mytfstcontainer" {
-    name                     = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}"
+    name                     = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}"
     container_access_type    = "private"
 
     tags = {
@@ -42,7 +42,7 @@ resource "azurerm_storage_container" "mytfstcontainer" {
 
 # create key vault
 resource "azurerm_key_vault" "mytfkv" {
-  name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv/${azurerm_storage_account.mytfstorage.name}ConnString"
+  name                = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv/${azurerm_storage_account.mytfstorage.name}ConnString"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
