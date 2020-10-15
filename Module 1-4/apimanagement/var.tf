@@ -9,10 +9,12 @@ variable "rglocation" {
 variable "projectname" {
     type    = string
     default = "projectParam"
+    description = "Name for the project"
 }
 variable "environmentName" {
     type    = string
     default = "dev"
+    description = "Name for the environment"
 }
 variable "zone" {
     type        = string
