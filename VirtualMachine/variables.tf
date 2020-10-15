@@ -1,9 +1,9 @@
-resource "random_uuid" "test" { 
-  keepers = {
-    # Generate a new id each time we switch to a new AMI id
-    ami_id = "${var.ami_id}"
-  }
-}
+#resource "random_uuid" "test" { 
+#  keepers = {
+#    # Generate a new id each time we switch to a new AMI id
+#    ami_id = "${var.ami_id}"
+#  }
+#}
 
 variable "projectname" {
   type         =  string
