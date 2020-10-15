@@ -51,7 +51,7 @@ DEPLOY
   deployment_mode = "Incremental"
 }
 
-resource "azurerm_template_deployment" "mydeploy" {
+resource "azurerm_template_deployment" "mydeploy1" {
   name                = "${loopInput-copyIndex(1)}"
   resource_group_name = azurerm_resource_group.myrg.name
 
