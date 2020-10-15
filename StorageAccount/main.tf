@@ -32,7 +32,7 @@ resource "azurerm_storage_account" "mytfstorage" {
 
 # create storage container
 resource "azurerm_storage_container" "mytfstcontainer" {
-    name                     = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}"
+    name                     = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}default${var.container_name}"
     storage_account_name  = azurerm_storage_account.mytfstorage.name
     container_access_type    = "private"
   
@@ -41,7 +41,7 @@ resource "azurerm_storage_container" "mytfstcontainer" {
 
 # create key vault
 resource "azurerm_key_vault" "mytfkv" {
-  name                = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv/${azurerm_storage_account.mytfstorage.name}ConnString"
+  name                = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}-default-${var.container_name}kv/${azurerm_storage_account.mytfstorage.name}ConnString"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
