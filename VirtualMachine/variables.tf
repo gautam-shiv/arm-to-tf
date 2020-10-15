@@ -42,11 +42,11 @@ variable "admin_name" {
 }
 
 variable "admin_password" {
-  type         =  securestring
+  type         =  string
   description  =  "Password for the Virtual Machine
 
   validation {
-    condition     = length(var.admin_password) > 11
+    condition     = length("${var.admin_password}") > 11
     error_message = "Password should have at least 12 characters"
   }
 }
