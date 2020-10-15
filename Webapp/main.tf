@@ -34,7 +34,7 @@ resource "azurerm_app_service" "mywebservice" {
     value = ""
   }
 
-  tags {
+  tags = {
         "hidden-related: ${azurerm_app_service_plan.mywebapp.id}" = "empty"
         displayName                                               = "Website"
    }
