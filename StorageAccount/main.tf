@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "myrg" {
-  name     = "dd-test-sample-rg-pasv"
+  name     = "dd-test-sample-rg-pasv1"
   location = "centralindia"
   
   tags = {
