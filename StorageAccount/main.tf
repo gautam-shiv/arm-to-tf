@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "mytfstorage" {
     location                 = azurerm_resource_group.myrg.location
     account_kind             = "StorageV2"
     account_tier             = "Standard"
-    account_replication_type = "${var.account_replication_type}"
+    account_replication_type = "${var.accountReplicationType}"
     access_tier              = "Hot"
 
     tags = {
@@ -32,7 +32,7 @@ resource "azurerm_storage_account" "mytfstorage" {
 
 # create storage container
 resource "azurerm_storage_container" "mytfstcontainer" {
-    name                     = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}default${var.container_name}"
+    name                     = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}default${var.containerName}"
     storage_account_name  = azurerm_storage_account.mytfstorage.name
     container_access_type    = "private"
   
