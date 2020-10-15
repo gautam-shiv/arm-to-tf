@@ -12,6 +12,8 @@ resource "azurerm_resource_group" "myrg" {
     }
 }
 
+data "azurerm_client_config" "current" {}
+
 # create storage account
 resource "azurerm_storage_account" "mytfstorage" {
     name                     = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.environmentName)}-st"
@@ -31,13 +33,10 @@ resource "azurerm_storage_account" "mytfstorage" {
 # create storage container
 resource "azurerm_storage_container" "mytfstcontainer" {
     name                     = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}"
+    storage_account_name  = azurerm_storage_account.example.name
     container_access_type    = "private"
-
-    tags = {
-        environment = "Terraform Demo"
-    }
-
-    depends_on               = [azurerm_storage_account.mytfstorage.id]
+  
+    depends_on               = [azurerm_storage_account.mytfstorage]
 }
 
 # create key vault
@@ -51,11 +50,11 @@ resource "azurerm_key_vault" "mytfkv" {
     environment = "Terraform Demo"
   }
 
-  dependsOn           = [azurerm_storage_account.mytfstorage.id]
+  dependsOn           = [azurerm_storage_account.mytfstorage]
 }
 
 resource "azurerm_key_vault_secret" "kvsecret" {
-  name         = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv-secret"
+  name         = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv-secret"
   value        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.mytfstorage.name};AccountKey=listKeys(${azurerm_storage_account.mytfstorage.id}2015-05-01-preview.key1)"
   key_vault_id = azurerm_key_vault.mytfkv.id
 
