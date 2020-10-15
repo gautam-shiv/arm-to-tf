@@ -55,7 +55,7 @@ resource "azurerm_key_vault" "mytfkv" {
 }
 
 resource "azurerm_key_vault_secret" "kvsecret" {
-  name         = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}-kv-secret"
+  name         = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.containerName}-kv-secret"
   value        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.mytfstorage.name};AccountKey=listKeys(${azurerm_storage_account.mytfstorage.id}2015-05-01-preview.key1)"
   key_vault_id = azurerm_key_vault.mytfkv.id
 
