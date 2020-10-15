@@ -41,7 +41,7 @@ resource "azurerm_storage_container" "mytfstcontainer" {
 
 # create key vault
 resource "azurerm_key_vault" "mytfkv" {
-  name                = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}-default-${var.containerName}kv/${azurerm_storage_account.mytfstorage.name}ConnString"
+  name                = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}default${var.containerName}kv${azurerm_storage_account.mytfstorage.name}ConnString"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -55,7 +55,7 @@ resource "azurerm_key_vault" "mytfkv" {
 }
 
 resource "azurerm_key_vault_secret" "kvsecret" {
-  name         = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.containerName}-kv-secret"
+  name         = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}default${var.containerName}kvsecret"
   value        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.mytfstorage.name};AccountKey=listKeys(${azurerm_storage_account.mytfstorage.id}2015-05-01-preview.key1)"
   key_vault_id = azurerm_key_vault.mytfkv.id
 
