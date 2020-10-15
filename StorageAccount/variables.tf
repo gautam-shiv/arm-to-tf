@@ -18,7 +18,7 @@ variable "environmentName" {
   }
 }
 
-variable "account_replication_type" {
+variable "accountReplicationType" {
   type         =  string
   description  =  "Account replication type"
   default      =  "LRS"
@@ -29,7 +29,7 @@ variable "account_replication_type" {
   }
 }
 
-variable "container_name" {
+variable "containerName" {
   type         =  string
   description  =  "Specifies the name of the blob container."
   default      =  "logs"
