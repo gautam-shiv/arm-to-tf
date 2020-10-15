@@ -7,21 +7,21 @@ resource "azurerm_resource_group" "myrg" {
   name     = "dd-test-sample-rg-pasv"
   location = "centralindia"
   
-  tags {
+  tags = {
         environment = "Terraform Demo"
     }
 }
 
 # create storage account
 resource "azurerm_storage_account" "mytfstorage" {
-    name                            = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-st"
+    name                            = "${toLower(var.projectname)}${toLower(var.zone)}${var.environmentName}st"
     resource_group_name             = azurerm_resource_group.myrg.name
     location                        = azurerm_resource_group.myrg.location
     account_replication_type        = "${var.account_replication_type}"
     account_tier                    = "Standard"
     account_kind                    = "Storage"
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 }
@@ -53,7 +53,7 @@ resource "azurerm_network_security_group" "mytfnsg" {
         destination_address_prefix = "*"
     }
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 }
@@ -65,7 +65,7 @@ resource "azurerm_virtual_network" "mytfvnet" {
     location            = azurerm_resource_group.myrg.location
     resource_group_name = azurerm_resource_group.myrg.name
 
-    depends_on = [azurerm_network_security_group.mynsg.id]
+    depends_on = [azurerm_network_security_group.mynsg]
 }
 
 # create subnet
@@ -88,11 +88,11 @@ resource "azurerm_network_interface" "mytfnic" {
         public_ip_address_id          = azurerm_public_ip.tfpublicip.id
     }
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 
-    depends_on = [azurerm_public_ip.tfpublicip.id, azurerm_virtual_network.mytfvnet.id]
+    depends_on = [azurerm_public_ip.tfpublicip, azurerm_virtual_network.mytfvnet]
 }
 
 # create virtual machine
@@ -120,7 +120,7 @@ resource "azurerm_virtual_machine" "myvm" {
     }
 
     os_profile {
-        computer_name  =   ${var.vmname}
+        computer_name  =  ${var.vmname}
         admin_username =  ${var.admin_name}
         admin_password =  ${var.admin_password}
     }
@@ -129,9 +129,9 @@ resource "azurerm_virtual_machine" "myvm" {
         storage_account_uri = azurerm_storage_account.mytfstorage.id.primaryEndpoints.blob
     }
 
-    tags {
+    tags = {
         environment = "Terraform Demo"
     }
 
-    depends_on      = [azurerm_storage_account.mytfstorage.id, azurerm_network_interface.mytfnic.id]
+    depends_on      = [azurerm_storage_account.mytfstorage, azurerm_network_interface.mytfnic]
 }
