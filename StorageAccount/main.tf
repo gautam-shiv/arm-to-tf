@@ -33,7 +33,7 @@ resource "azurerm_storage_account" "mytfstorage" {
 # create storage container
 resource "azurerm_storage_container" "mytfstcontainer" {
     name                     = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-default-${var.container_name}"
-    storage_account_name  = azurerm_storage_account.example.name
+    storage_account_name  = azurerm_storage_account.mytfstorage.name
     container_access_type    = "private"
   
     depends_on               = [azurerm_storage_account.mytfstorage]
@@ -45,12 +45,13 @@ resource "azurerm_key_vault" "mytfkv" {
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = "Standard"
 
   tags = {
     environment = "Terraform Demo"
   }
 
-  dependsOn           = [azurerm_storage_account.mytfstorage]
+  depends_on           = [azurerm_storage_account.mytfstorage]
 }
 
 resource "azurerm_key_vault_secret" "kvsecret" {
