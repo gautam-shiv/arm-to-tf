@@ -20,14 +20,14 @@ resource "azurerm_stream_analytics_job" "mytfsajob" {
   events_out_of_order_max_delay_in_seconds = 0
   events_out_of_order_policy               = "Adjust"
   output_error_policy                      = "Stop"
-  streaming_units                          = ${var.num_streaming_units}
+  streaming_units                          = "${var.num_streaming_units}"
 
   tags = {
     environment = "Terraform Demo"
   }
 
   transformation_query = <<QUERY
-    ${var.stream_query}
+    "${var.stream_query}"
 QUERY
 
 }
