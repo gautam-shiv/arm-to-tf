@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_app_service_plan" "appserviceplan" {
-    name                         = "${var.projectName}${var.zone}-${var.envName}premiumplan"
+    name                         = "${lower(var.projectName)}${lower(var.zone)}-${lower(var.envName)}premiumplan"
     location                     = var.rglocation
     resource_group_name          = var.rgname
     kind                         = "elastic"

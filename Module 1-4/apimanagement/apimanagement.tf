@@ -1,5 +1,5 @@
 resource "azurerm_api_management" "myapim" {
-    name                = "${var.projectname}${var.zone}-${var.environmentName}apim"
+    name                = "${lower(var.projectname)}${lower(var.zone)}-${lower(var.environmentName)}apim"
     location            = var.rglocation
     resource_group_name = var.rgname
     sku_name            = var.skuname
