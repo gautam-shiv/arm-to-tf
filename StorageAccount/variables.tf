@@ -20,7 +20,7 @@ variable "environmentName" {
 
 variable "account_replication_type" {
   type         =  string
-  description  =  "Name for the environment"
+  description  =  "Account replication type"
   default      =  "Standard_LRS"
 
   validation {
