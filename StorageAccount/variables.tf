@@ -24,7 +24,7 @@ variable "accountReplicationType" {
   default      =  "LRS"
 
   validation {
-    condition     = contains(["LRS", "GRS", "RAGRS"], "${var.account_replication_type}")
+    condition     = contains(["LRS", "GRS", "RAGRS"], "${var.accountReplicationType}")
     error_message = "Argument \"account_replication_type\" must be either \"LRS\", \"GRS\"or \"RAGRS\"."
   }
 }
