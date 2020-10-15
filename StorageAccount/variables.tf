@@ -13,18 +13,18 @@ variable "environmentName" {
   description  =  "Name for the environment"
 
   validation {
-    condition     = contains(["lab", "dev", "pro", "qa"], var.environmentName)
+    condition     = contains(["lab", "dev", "pro", "qa"], "${var.environmentName}")
     error_message = "Argument \"environmentName\" must be either \"lab\", \"dev\", \"qa\" or \"pro\"."
   }
 }
 
 variable "account_replication_type" {
   type         =  string
-  description  =  "Name for the environment"
+  description  =  "Account replication type"
   default      =  "Standard_LRS"
 
   validation {
-    condition     = contains(["Standard_LRS", "Standard_GRS", "Standard_RAGRS"], var.account_replication_type)
+    condition     = contains(["Standard_LRS", "Standard_GRS", "Standard_RAGRS"], "${var.account_replication_type}")
     error_message = "Argument \"account_replication_type\" must be either \"Standard_LRS\", \"Standard_GRS\"or \"Standard_RAGRS\"."
   }
 }
