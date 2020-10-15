@@ -21,11 +21,11 @@ variable "environmentName" {
 variable "account_replication_type" {
   type         =  string
   description  =  "Account replication type"
-  default      =  "Standard_LRS"
+  default      =  "LRS"
 
   validation {
-    condition     = contains(["Standard_LRS", "Standard_GRS", "Standard_RAGRS"], "${var.account_replication_type}")
-    error_message = "Argument \"account_replication_type\" must be either \"Standard_LRS\", \"Standard_GRS\"or \"Standard_RAGRS\"."
+    condition     = contains(["LRS", "GRS", "RAGRS"], "${var.account_replication_type}")
+    error_message = "Argument \"account_replication_type\" must be either \"LRS\", \"GRS\"or \"RAGRS\"."
   }
 }
 
