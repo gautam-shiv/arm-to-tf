@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "myrg" {
-  name     = "dd-test-sample-rg-pasv"
+  name     = "dd-test-sample-rg-pasv1"
   location = "centralindia"
   
   tags = {
@@ -14,7 +14,7 @@ resource "azurerm_resource_group" "myrg" {
 
 # create storage account
 resource "azurerm_storage_account" "mytfstorage" {
-    name                            = "${toLower(var.projectname)}${toLower(var.zone)}${var.environmentName}st"
+    name                            = "${lower(var.projectname)}${lower(var.zone)}${var.environmentName}st"
     resource_group_name             = azurerm_resource_group.myrg.name
     location                        = azurerm_resource_group.myrg.location
     account_replication_type        = "${var.account_replication_type}"
@@ -31,13 +31,13 @@ resource "azurerm_public_ip" "tfpublicip" {
     name                         = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-snet"
     location                     = azurerm_resource_group.myrg.location
     resource_group_name          = azurerm_resource_group.myrg.name
-    sku_name                     = ${var.publicip_sku}
-    public_ip_address_allocation = ${var.public_allocation_method}
+    sku_name                     = "${var.publicip_sku}"
+    public_ip_address_allocation = "${var.public_allocation_method}"
 }
 
 # create NSG
 resource "azurerm_network_security_group" "mytfnsg" {
-    name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-nsg"
+    name                = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-nsg"
     location            = azurerm_resource_group.myrg.location
     resource_group_name = azurerm_resource_group.myrg.name
 
@@ -60,7 +60,7 @@ resource "azurerm_network_security_group" "mytfnsg" {
 
 # create a virtual network
 resource "azurerm_virtual_network" "mytfvnet" {
-    name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-vnet"
+    name                = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-vnet"
     address_space       = ["10.0.0.0/16"]
     location            = azurerm_resource_group.myrg.location
     resource_group_name = azurerm_resource_group.myrg.name
@@ -70,14 +70,14 @@ resource "azurerm_virtual_network" "mytfvnet" {
 
 # create subnet
 resource "azurerm_subnet" "mytfsubnet" {
-    name                 = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-snet"
+    name                 = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-snet"
     resource_group_name  = azurerm_resource_group.myrg.name
     virtual_network_name = azurerm_resource_group.myrg.location
     address_prefix       = ["10.0.2.0/24"]
 }
 
 resource "azurerm_network_interface" "mytfnic" {
-    name                      = "${toLower(var.projectname)}-${toLower(var.zone)}-${var.environmentName}-nic"
+    name                      = "${lower(var.projectname)}-${lower(var.zone)}-${var.environmentName}-nic"
     location                  = azurerm_resource_group.myrg.location
     resource_group_name       = azurerm_resource_group.myrg.name
 
@@ -108,7 +108,7 @@ resource "azurerm_virtual_machine" "myvm" {
   storage_image_reference {
         publisher       = "MicrosoftWindowsServer"
         offer           = "WindowsServer"
-        sku             = ${var.os_version}
+        sku             = "${var.os_version}"
         version         = "latest"
     }
 
@@ -116,13 +116,13 @@ resource "azurerm_virtual_machine" "myvm" {
         name              = "myosdisk"
         caching           = "ReadWrite"
         create_option     = "FromImage"
-        managed_disk_type = ${var.os_disk_type}
+        managed_disk_type = "${var.os_disk_type}"
     }
 
     os_profile {
-        computer_name  =  ${var.vmname}
-        admin_username =  ${var.admin_name}
-        admin_password =  ${var.admin_password}
+        computer_name  =  "${var.vmname}"
+        admin_username =  "${var.admin_name}"
+        admin_password =  "${var.admin_password}"
     }
 
     boot_diagnostics {
