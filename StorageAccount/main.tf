@@ -16,7 +16,7 @@ data "azurerm_client_config" "current" {}
 
 # create storage account
 resource "azurerm_storage_account" "mytfstorage" {
-    name                     = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.environmentName)}-st"
+    name                     = "${lower(var.projectname)}_${lower(var.zone)}_${lower(var.environmentName)}_st"
     resource_group_name      = azurerm_resource_group.myrg.name
     location                 = azurerm_resource_group.myrg.location
     account_kind             = "StorageV2"
