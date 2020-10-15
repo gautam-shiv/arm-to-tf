@@ -45,7 +45,7 @@ resource "azurerm_key_vault" "mytfkv" {
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "Standard"
+  sku_name            = "standard"
 
   tags = {
     environment = "Terraform Demo"
