@@ -13,7 +13,7 @@ variable "environmentName" {
   description  =  "Name for the environment"
 
   validation {
-    condition     = contains(["lab", "dev", "pro", "qa"], var.environmentName)
+    condition     = contains(["lab", "dev", "pro", "qa"], "${var.environmentName}")
     error_message = "Argument \"environmentName\" must be either \"lab\", \"dev\", \"qa\" or \"pro\"."
   }
 }
@@ -29,7 +29,7 @@ variable "stream_analytics_name" {
 }
 
 variable "num_streaming_units" {
-  type         =  int
+  type         =  number
   description  =  "Number of Streaming Units"
 
   validation {
@@ -43,7 +43,7 @@ variable "num_streaming_units" {
         30,
         36,
         42,
-        48 ], var.num_streaming_units)
+        48 ], "${var.num_streaming_units}")
     error_message = "Argument \"num_streaming_units\" must be either \"1\", \"3\", \"6\" or \"or multiple of 6\"."
   }
 }
