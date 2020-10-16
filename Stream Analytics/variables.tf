@@ -29,21 +29,11 @@ variable "stream_analytics_name" {
 }
 
 variable "num_streaming_units" {
-  type         =  string
+  type         =  number
   description  =  "Number of Streaming Units"
 
   validation {
-    condition  = contains([ 
-        1,
-        3,
-        6,
-        12,
-        18,
-        24,
-        30,
-        36,
-        42,
-        48 ], "${var.num_streaming_units}")
+    condition  = "${var.num_streaming_units}" == 1 || "${var.num_streaming_units}" == 3 || "${var.num_streaming_units}"%6 == 0
     error_message = "Argument \"num_streaming_units\" must be either \"1\", \"3\", \"6\" or \"or multiple of 6\"."
   }
 }
