@@ -29,7 +29,7 @@ variable "stream_analytics_name" {
 }
 
 variable "num_streaming_units" {
-  type         =  number
+  type         =  string
   description  =  "Number of Streaming Units"
 
   validation {
