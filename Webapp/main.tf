@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "myrg" {
 }
 
 resource "azurerm_app_service_plan" "mywebapp" {
-  name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${toLower(var.webSiteName)}-${toLower(var.environmentName)}-plan"
+  name                = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.webSiteName)}-${lower(var.environmentName)}-plan"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
 
@@ -23,7 +23,7 @@ resource "azurerm_app_service_plan" "mywebapp" {
 }
 
 resource "azurerm_app_service" "mywebservice" {
-  name                = "${toLower(var.projectname)}-${toLower(var.zone)}-${toLower(var.webSiteName)}-${toLower(var.environmentName)}-app"
+  name                = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.webSiteName)}-${lower(var.environmentName)}-app"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
   app_service_plan_id = azurerm_app_service_plan.mywebapp.id
