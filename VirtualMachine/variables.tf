@@ -43,7 +43,7 @@ variable "admin_name" {
 
 variable "admin_password" {
   type         =  string
-  description  =  "Password for the Virtual Machine
+  description  =  "Password for the Virtual Machine"
 
   validation {
     condition     = length("${var.admin_password}")>11
