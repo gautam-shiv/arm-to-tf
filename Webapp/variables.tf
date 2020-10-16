@@ -37,7 +37,7 @@ variable "skusize" {
 variable "skuname" {
   type         =  string
   description  =  "Disk sku name"
-  default      =  "Standard_LRS"
+  default      =  "F1"
 
   validation {
     condition  = contains([ "F1",
