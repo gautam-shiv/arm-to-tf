@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "myrg" {
 }
 
 resource "azurerm_stream_analytics_job" "mytfsajob" {
-  name                                     = "${toLower(var.projectname)}-${toLower(var.zone)}-${toLower(var.stream_analytics_name)}-${toLower(var.environmentName)}-asa"
+  name                                     = "${lower(var.projectname)}-${lower(var.zone)}-${lower(var.stream_analytics_name)}-${lower(var.environmentName)}-asa"
   resource_group_name                      = azurerm_resource_group.myrg.name
   location                                 = azurerm_resource_group.myrg.location
   compatibility_level                      = "1.1"
@@ -52,7 +52,7 @@ DEPLOY
 }
 
 resource "azurerm_template_deployment" "mydeploy1" {
-  name                = "${loopInput-copyIndex(1)}"
+  name                = "loopInput-1"
   resource_group_name = azurerm_resource_group.myrg.name
 
   template_body = <<DEPLOY
