@@ -16,7 +16,7 @@ variable "zone"{
 
 variable "location"{
   type        = string
-  description = "Specifies the Azure location where the key vault should be created."
+  description = "Specifies the Azure location for all the resources."
   default     = "centralindia"
 }
 
@@ -42,8 +42,8 @@ variable "storageAccountType" {
 }
 
 variable "endpointSuffix"{
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Defaults to Azure (core.windows.net). Override this to use the China cloud (core.chinacloudapi.cn)."
   validation {
     condition     = contains([ "", ";EndpointSuffix=core.chinacloudapi.cn" ], var.endpointSuffix)
