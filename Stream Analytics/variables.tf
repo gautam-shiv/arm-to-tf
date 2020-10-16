@@ -33,7 +33,7 @@ variable "num_streaming_units" {
   description  =  "Number of Streaming Units"
 
   validation {
-    condition  = "${var.num_streaming_units}" == 1 || "${var.num_streaming_units}" == 3 || "${var.num_streaming_units}"%6 == 0
+    condition  = ("${var.num_streaming_units}" == 1 || "${var.num_streaming_units}" == 3 || ("${var.num_streaming_units}")%6 == 0)
     error_message = "Argument \"num_streaming_units\" must be either \"1\", \"3\", \"6\" or \"or multiple of 6\"."
   }
 }
