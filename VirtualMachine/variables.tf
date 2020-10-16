@@ -47,14 +47,13 @@ variable "admin_password" {
 
   validation {
     condition     = length("${var.admin_password}")>11
-    error_message = "Password should have at least 12 characters"
+    error_message = "Password should have at least 12 characters."
   }
 }
 
 variable "dnslabelprefix" {
   type         =  string
   description  =  "Unique DNS Name for the Public IP used to access the Virtual Machine"
-  default      =  "${lower(var.vmName)}-${azurerm_resource_group.myrg.id}-${var.vmName}"
 }
 
 variable "publicip_sku" {
