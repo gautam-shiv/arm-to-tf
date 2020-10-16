@@ -11,10 +11,9 @@ resource "azurerm_resource_group" "myrg" {
     }
 }
 
-resource "azurerm_eventhub" "example" {
-  name                = "${toLower(var.projectName)}-${toLower(var.zone)}-${toLower(var.environmentName)}-ehc"
+resource "azurerm_eventhub_cluster" "dd-ehc" {
+  name                = "${lower(var.projectName)}-${lower(var.zone)}-${lower(var.environmentName)}-ehc"
   location            = azurerm_resource_group.myrg.location
   resource_group_name = azurerm_resource_group.myrg.name
-  sku                 = "Dedicated"
-  capacity            = 1
+  sku_name            = "Dedicated_1"
 }

@@ -16,7 +16,7 @@ variable "environmentName"{
 variable "location"{
   type        = string
   description = "Specifies the Azure location for all resources."
-  default     = azurerm_resource_group.myrg.location
+  default     = "centralindia"
 }
 
 variable "zone"{
