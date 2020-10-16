@@ -24,13 +24,13 @@ variable "webSiteName" {
 }
 
 variable "skusize" {
-  type         =  int
+  type         =  number
   description  =  "Describes plan's instance count"
   default      =  1
 
   validation {
     condition     = var.skusize > 0 && var.skusize < 4
-    error_message = "Sku capacity should be between 1 and 3"
+    error_message = "Sku capacity should be between 1 and 3."
   }
 }
 
